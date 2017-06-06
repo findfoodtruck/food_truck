@@ -39,7 +39,19 @@ Template.map.helpers({
 Template.map.onCreated(function() {
   GoogleMaps.ready('map', function(map) {
     Tasks.find({}).forEach((p) => {
+
+      var image = {
+      url: 'truck.jpg',
+      size: new google.maps.Size(71, 71),
+      origin: new google.maps.Point(0, 0),
+      anchor: new google.maps.Point(17, 34),
+      scaledSize: new google.maps.Size(35, 35)
+      };
+
       var marker = new google.maps.Marker({
+      title: "my truck",
+      animation: google.maps.Animation.DROP,
+      icon: image,
       position: new google.maps.LatLng(p.lat, p.lng),
       map: map.instance
     });
