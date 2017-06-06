@@ -1,0 +1,20 @@
+<head>
+  <title>food_truck</title>
+</head>
+
+<body>
+  <h1>Welcome to food truck!</h1>
+  {{> map}}
+</body>
+
+<template name="map">
+ <div class="map-container">
+   {{#unless geolocationError}}
+     {{> googleMap name="map" options=mapOptions}}
+   {{else}}
+     Geolocation failed: {{geolocationError}}
+   {{/unless}}
+ </div>
+  <button>Add Me</button>
+  <p> Sucessfully Added {{add}}</p>
+</template>
