@@ -26,3 +26,5 @@ dynamic-import
 accounts-base
 accounts-password
 accounts-ui
+twbs:bootstrap
+aldeed:collection2

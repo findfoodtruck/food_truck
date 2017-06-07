@@ -2,7 +2,7 @@ import {
   Tasks
 } from '../imports/api/tasks.js';
 
-var MAP_ZOOM = 14;
+var MAP_ZOOM = 15;
 
 Meteor.startup(function() {
   GoogleMaps.load({

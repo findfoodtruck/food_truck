@@ -3,13 +3,16 @@
 </head>
 
 <body>
-  <h1>Welcome to food truck!</h1>
+  {{> nav}}
+  <div class="container">
+  <h2>Welcome to food truck!</h2>
   {{> loginButtons}}
   {{#if currentUser}}
   {{> map}}
   {{else}}
-  <h2>Login to see trucks on map.</h2>
+  <p class="lead">Login to see trucks on map.</p>
   {{/if}}
+  </div>
 </body>
 
 <template name="map">
@@ -20,6 +23,8 @@
      Geolocation failed: {{geolocationError}}
    {{/unless}}
  </div>
-  <button>Add Me</button>
+ <br>
+ <br>
+  <button class="btn btn-primary btn-lg">Add Me</button>
   <p> Sucessfully Added {{add}}</p>
 </template>
