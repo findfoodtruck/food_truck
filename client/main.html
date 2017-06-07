@@ -4,7 +4,12 @@
 
 <body>
   <h1>Welcome to food truck!</h1>
+  {{> loginButtons}}
+  {{#if currentUser}}
   {{> map}}
+  {{else}}
+  <h2>Login to see trucks on map.</h2>
+  {{/if}}
 </body>
 
 <template name="map">

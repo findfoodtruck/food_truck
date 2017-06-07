@@ -23,3 +23,6 @@ dburles:google-maps
 mdg:geolocation
 force-ssl@1.0.14
 dynamic-import
+accounts-base
+accounts-password
+accounts-ui
