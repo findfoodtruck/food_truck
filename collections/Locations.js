@@ -57,15 +57,3 @@ Locations.schema = new SimpleSchema({
 });
 
 Locations.attachSchema(Locations.schema);
-
-
-Meteor.methods({
-  'addLocation': function(id, lat, lng) {
-    //    console.log(id);
-
-  },
-  'deleteLocation': function(id, flag) {
-    //add code
-  }
-
-});

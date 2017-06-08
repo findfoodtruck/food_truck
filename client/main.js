@@ -12,19 +12,30 @@ Meteor.startup(function() {
   });
 });
 
+Template.map.events({
+  'click .goOnline': function() {
+    var latLng = Geolocation.latLng();
+    console.log(latLng);
+    if (latLng) {
+      Meteor.call('addLocation', latLng, (result, error) => {
+        if (result) console.log('addLocation : ' + result);
+        if (error) console.error('akm: ' + error);
+      });
+    } else {
+      console.log('locations NA');
+    }
+  }
+});
+
 Template.map.helpers({
   geolocationError: function() {
     var error = Geolocation.error();
     return error && error.message;
   },
 
-  add: function() {
+  locations: function() {
     var latLng = Geolocation.latLng();
-    Tasks.insert({
-      name: "value",
-      lat: latLng.lat,
-      lng: latLng.lng
-    });
+    //Tasks.find({});
   },
   mapOptions: function() {
     var latLng = Geolocation.latLng();
@@ -39,7 +50,8 @@ Template.map.helpers({
 });
 
 Template.map.onCreated(function() {
-
+  var self = this;
+  this.subscribe('allLocations');
   GoogleMaps.ready('map', function(map) {
     var image = {
       url: 'food-truck.png',
@@ -48,14 +60,17 @@ Template.map.onCreated(function() {
       anchor: new google.maps.Point(17, 34),
       scaledSize: new google.maps.Size(35, 35)
     };
-    Tasks.find({}).forEach((p) => {
-      var marker = new google.maps.Marker({
-        title: "my truck",
-        animation: google.maps.Animation.DROP,
-        icon: image,
-        position: new google.maps.LatLng(p.lat, p.lng),
-        map: map.instance
+    self.autorun(function() {
+      Locations.find({}).forEach((p) => {
+        var marker = new google.maps.Marker({
+          title: "my truck",
+          animation: google.maps.Animation.DROP,
+          icon: image,
+          position: new google.maps.LatLng(p.lat, p.lng),
+          map: map.instance
+        });
       });
     });
+
   });
 });
