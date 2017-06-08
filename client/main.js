@@ -20,11 +20,11 @@ Template.map.helpers({
 
   add: function() {
     var latLng = Geolocation.latLng();
-    Tasks.insert({
+  /*  Tasks.insert({
       name: "value",
       lat: latLng.lat,
       lng: latLng.lng
-    });
+    });*/
   },
   mapOptions: function() {
     var latLng = Geolocation.latLng();
