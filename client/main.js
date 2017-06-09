@@ -3,7 +3,7 @@ import {
 } from '../imports/api/tasks.js';
 
 var MAP_ZOOM = 15;
-
+var markers = [];
 Meteor.startup(function() {
   GoogleMaps.load({
     v: '3',
@@ -21,9 +21,15 @@ Template.map.events({
         if (result) console.log('addLocation : ' + result);
         if (error) console.error('akm: ' + error);
       });
+      Session.set('onlineStatus', true);
     } else {
       console.log('locations NA');
     }
+  },
+  'click .goOffline': function() {
+    Session.set('onlineStatus', false);
+    console.log('going offline');
+    Meteor.call('deleteLocation', Meteor.userId());
   }
 });
 
@@ -46,11 +52,16 @@ Template.map.helpers({
         zoom: MAP_ZOOM
       };
     }
+  },
+  onlineStatus: function() {
+    return Session.get('onlineStatus');
   }
 });
 
 Template.map.onCreated(function() {
   var self = this;
+  Session.set('onlineStatus', false);
+
   this.subscribe('allLocations');
   GoogleMaps.ready('map', function(map) {
     var image = {
@@ -61,15 +72,44 @@ Template.map.onCreated(function() {
       scaledSize: new google.maps.Size(35, 35)
     };
     self.autorun(function() {
-      Locations.find({}).forEach((p) => {
-        var marker = new google.maps.Marker({
-          title: "my truck",
-          animation: google.maps.Animation.DROP,
-          icon: image,
-          position: new google.maps.LatLng(p.lat, p.lng),
-          map: map.instance
+      if (markers) {
+        for (i in markers) {
+          markers[i].setMap(null);
+        }
+      }
+      if (Session.get('onlineStatus')) {
+        Locations.find({
+          deleted: false
+        }).forEach((p) => {
+          var marker = new google.maps.Marker({
+            title: "my truck",
+            animation: google.maps.Animation.DROP,
+            icon: image,
+            position: new google.maps.LatLng(p.lat, p.lng),
+            map: map.instance
+          });
+          markers.push(marker);
         });
-      });
+      } else {
+        console.log(Meteor.userId());
+        Locations.find({
+          userId: {
+            $ne: Meteor.userId()
+          },
+          deleted: false
+        }).forEach((p) => {
+          console.log('not users location');
+          var marker = new google.maps.Marker({
+            title: "my truck",
+            animation: google.maps.Animation.DROP,
+            icon: image,
+            position: new google.maps.LatLng(p.lat, p.lng),
+            map: map.instance
+          });
+          markers.push(marker);
+        });
+      }
+
     });
 
   });

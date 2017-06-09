@@ -1,3 +1,5 @@
 Meteor.publish('allLocations', function() {
-  return Locations.find({});
+  return Locations.find({
+    deleted: false
+  });
 });
