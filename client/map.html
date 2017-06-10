@@ -1,0 +1,19 @@
+<template name="map">
+  {{#if onlineStatus}}
+  <button class="btn btn-default goOffline"> Go Offline</button>
+  <p class='lead'> Your are online, click button to go offline.</p>
+  {{else}}
+  <button class="btn btn-default goOnline"> Go Online</button>
+  <p class='lead'> Your are offline, click button to go online.</p>
+  {{/if}}
+  <br>
+ <div class="map-container">
+
+   {{#unless geolocationError}}
+     {{> googleMap name="map" options=mapOptions}}
+   {{else}}
+     Geolocation failed: {{geolocationError}}
+   {{/unless}}
+
+ </div>
+</template>
