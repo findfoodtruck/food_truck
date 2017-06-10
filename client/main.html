@@ -9,10 +9,13 @@
   {{> loginButtons}}
   {{#if currentUser}}
   {{> map}}
+  <h2>VendorProfile details</h2>
+  {{> VendorProfile}}
   {{else}}
   <p class="lead">Login to see trucks on map.</p>
   {{/if}}
   </div>
+
 </body>
 
 <template name="map">

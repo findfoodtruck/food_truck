@@ -1,0 +1,8 @@
+<template name="VendorProfile">
+  {{> quickForm collection="VendorProfile" id="insertVendorProfileForm" type="insert"}}
+
+  <h2>All Added details</h2>
+  {{#each profileDetails}}
+  {{field}}-{{value}} <br>
+  {{/each}}
+</template>

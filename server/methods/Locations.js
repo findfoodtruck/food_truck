@@ -8,13 +8,13 @@ Meteor.methods({
       userId: this.userId
     }, function(error, result) {
       if (error) console.log('er :' + error); //info about what went wrong
-      if (result) console.log('re : ' + result); //the _id of new object if successful
+      //    if (result) console.log('re : ' + result); //the _id of new object if successful
     });
 
   },
   'deleteLocation': function(id) {
     //add code
-    console.log('deleting location');
+    //  console.log('deleting location');
     Locations.find({
       userId: id
     }).forEach((loc) => {
@@ -25,7 +25,7 @@ Meteor.methods({
         },
         function(error, result) {
           if (error) console.log('dee :' + error); //info about what went wrong
-          if (result) console.log('der : ' + result); //the _id of new object if successful
+          //  if (result) console.log('der : ' + result); //the _id of new object if successful
         });
     });
 
