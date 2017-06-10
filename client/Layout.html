@@ -1,0 +1,12 @@
+<template name="HomeLayout">
+  {{> nav}}
+  <div class="container">
+  {{> loginButtons}}
+  {{#if currentUser}}
+  {{> Template.dynamic template=main}}
+  {{else}}
+  <p class="lead">Login to see this page.</p>
+  {{/if}}
+
+</div>
+</template>

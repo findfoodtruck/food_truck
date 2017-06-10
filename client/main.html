@@ -1,33 +1,3 @@
 <head>
   <title>Local Food Trucks</title>
 </head>
-
-<body>
-  {{> nav}}
-  <div class="container">
-  <h2>Welcome to food truck!</h2>
-  {{> loginButtons}}
-  {{#if currentUser}}
-  {{> map}}
-  {{else}}
-  <p class="lead">Login to see trucks on map.</p>
-  {{/if}}
-  </div>
-</body>
-
-<template name="map">
-  <br>
-  <button class="btn btn-default goOnline"> Go Online</button>
-  <p class='lead'> Sucessfully Added</p>
-  <br>
- <div class="map-container">
-   {{#unless geolocationError}}
-     {{> googleMap name="map" options=mapOptions}}
-   {{else}}
-     Geolocation failed: {{geolocationError}}
-   {{/unless}}
- </div>
- <br>
- <br>
-
-</template>

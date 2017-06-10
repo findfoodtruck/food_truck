@@ -27,3 +27,7 @@ accounts-ui
 twbs:bootstrap
 aldeed:collection2
 meteortoys:allthings
+aldeed:autoform
+session@1.1.7
+kadira:flow-router
+kadira:blaze-layout
