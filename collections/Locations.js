@@ -10,10 +10,7 @@ Locations.schema = new SimpleSchema({
     type: Number,
     label: "Lng",
     decimal: true
-  },
-  newfield:{
-    
-  },
+  }
   deleted: {
     type: Boolean,
     defaultValue: false
