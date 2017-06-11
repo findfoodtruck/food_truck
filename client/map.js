@@ -8,7 +8,8 @@ Meteor.startup(function() {
   GoogleMaps.load({
     v: '3',
     key: 'AIzaSyDbeFfTH7Mg6LVJIeo5LmMfl8MEnbvkQIQ',
-    libraries: 'geometry,places'
+    libraries: 'geometry,places',
+    center: Geolocation.latLng()
   });
 });
 
@@ -34,6 +35,7 @@ Template.map.events({
 });
 
 Template.map.helpers({
+
   geolocationError: function() {
     var error = Geolocation.error();
     return error && error.message;
@@ -91,10 +93,12 @@ Template.map.onCreated(function() {
           var marker = new google.maps.Marker({
             title: "my truck",
             animation: google.maps.Animation.DROP,
+            draggable: true,
             icon: image,
             position: new google.maps.LatLng(p.lat, p.lng),
             map: map.instance
           });
+
           markers.push(marker);
         });
       } else {
@@ -108,10 +112,12 @@ Template.map.onCreated(function() {
           console.log('not users location');
           var marker = new google.maps.Marker({
             title: "my truck",
+            label: "adding my label",
             animation: google.maps.Animation.DROP,
             icon: image,
             position: new google.maps.LatLng(p.lat, p.lng),
-            map: map.instance
+            map: map.instance,
+            draggable: true
           });
           markers.push(marker);
         });
