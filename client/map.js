@@ -61,6 +61,11 @@ Template.map.onCreated(function() {
         Locations.find({
           deleted: false
         }).forEach((p) => {
+
+          var contentString = "<div>  <b> This is my truck </b> " + Meteor.userId() + "</div>";
+          var infowindow = new google.maps.InfoWindow({
+         content: contentString
+       });
           var marker = new google.maps.Marker({
             title: "my truck",
             animation: google.maps.Animation.DROP,
@@ -69,6 +74,10 @@ Template.map.onCreated(function() {
             position: new google.maps.LatLng(p.lat, p.lng),
             map: map.instance
           });
+
+          marker.addListener('click', function() {
+                    infowindow.open(map, marker);
+                  });
 
           markers.push(marker);
         });
