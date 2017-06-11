@@ -12,26 +12,7 @@ Meteor.startup(function() {
   });
 });
 
-Template.map.events({
-  'click .goOnline': function() {
-    var latLng = Geolocation.latLng();
-    console.log(latLng);
-    if (latLng) {
-      Meteor.call('addLocation', latLng, (result, error) => {
-        if (result) console.log('addLocation : ' + result);
-        if (error) console.error('akm: ' + error);
-      });
-      Session.set('onlineStatus', true);
-    } else {
-      console.log('locations NA');
-    }
-  },
-  'click .goOffline': function() {
-    Session.set('onlineStatus', false);
-    console.log('going offline');
-    Meteor.call('deleteLocation', Meteor.userId());
-  }
-});
+
 
 Template.map.helpers({
   geolocationError: function() {
@@ -41,11 +22,11 @@ Template.map.helpers({
 
   locations: function() {
     var latLng = Geolocation.latLng();
-  /*  Tasks.insert({
-      name: "value",
-      lat: latLng.lat,
-      lng: latLng.lng
-    });*/
+    /*  Tasks.insert({
+        name: "value",
+        lat: latLng.lat,
+        lng: latLng.lng
+      });*/
 
     //Tasks.find({});
 
@@ -59,10 +40,8 @@ Template.map.helpers({
         zoom: MAP_ZOOM
       };
     }
-  },
-  onlineStatus: function() {
-    return Session.get('onlineStatus');
   }
+
 });
 
 Template.map.onCreated(function() {

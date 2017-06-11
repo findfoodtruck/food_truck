@@ -1,12 +1,10 @@
 <template name="HomeLayout">
   {{> nav}}
-  <div class="container">
-  {{> loginButtons}}
+  <div class="container-fluid">
   {{#if currentUser}}
   {{> Template.dynamic template=main}}
   {{else}}
   <p class="lead">Login to see this page.</p>
   {{/if}}
-
 </div>
 </template>
