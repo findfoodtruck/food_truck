@@ -16,22 +16,9 @@ Meteor.startup(function() {
 
 
 Template.map.helpers({
-
   geolocationError: function() {
     var error = Geolocation.error();
     return error && error.message;
-  },
-
-  locations: function() {
-    var latLng = Geolocation.latLng();
-    /*  Tasks.insert({
-        name: "value",
-        lat: latLng.lat,
-        lng: latLng.lng
-      });*/
-
-    //Tasks.find({});
-
   },
   mapOptions: function() {
     var latLng = Geolocation.latLng();
@@ -48,9 +35,7 @@ Template.map.helpers({
 
 Template.map.onCreated(function() {
   var self = this;
-  Session.set('onlineStatus', false);
-
-  this.subscribe('allLocations');
+  self.subscribe('allLocations');
   GoogleMaps.ready('map', function(map) {
     var image = {
       url: 'food-truck.png',
@@ -60,12 +45,19 @@ Template.map.onCreated(function() {
       scaledSize: new google.maps.Size(35, 35)
     };
     self.autorun(function() {
+      var onlineStatus = false;
       if (markers) {
         for (i in markers) {
           markers[i].setMap(null);
         }
       }
-      if (Session.get('onlineStatus')) {
+      var loc = Locations.findOne({
+        userId: Meteor.userId(),
+        deleted: false
+      });
+      if (loc && !loc.deleted) onlineStatus = true;
+
+      if (onlineStatus) {
         Locations.find({
           deleted: false
         }).forEach((p) => {
@@ -81,7 +73,6 @@ Template.map.onCreated(function() {
           markers.push(marker);
         });
       } else {
-        console.log(Meteor.userId());
         Locations.find({
           userId: {
             $ne: Meteor.userId()

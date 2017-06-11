@@ -1,26 +1,34 @@
+Template.map.onCreated(function() {
+  var self = this;
+  self.subscribe('allLocations');
+
+});
 Template.nav.events({
   'click .goOnline': function() {
     var latLng = Geolocation.latLng();
-    console.log(latLng);
     if (latLng) {
-      Meteor.call('addLocation', latLng, (result, error) => {
-        if (result) console.log('addLocation : ' + result);
-        if (error) console.error('akm: ' + error);
-      });
-      Session.set('onlineStatus', true);
+      Meteor.call('addLocation', latLng);
     } else {
-      console.log('locations NA');
+      console.log('locations Not Available');
     }
   },
   'click .goOffline': function() {
-    Session.set('onlineStatus', false);
-    console.log('going offline');
     Meteor.call('deleteLocation', Meteor.userId());
   }
 });
 
 Template.nav.helpers({
   onlineStatus: function() {
-    return Session.get('onlineStatus');
+    var loc = Locations.findOne({
+      userId: Meteor.userId(),
+      deleted: false
+    });
+    if (loc && !loc.deleted) return true;
+    return false;
+    //  console.log(loc);
+  },
+  showButton: function() {
+    var latLng = Geolocation.latLng();
+    return !!latLng;
   }
 });
