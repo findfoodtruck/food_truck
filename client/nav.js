@@ -7,7 +7,7 @@ Template.nav.events({
   'click .goOnline': function() {
     var latLng = Geolocation.latLng();
     if (latLng) {
-      Meteor.call('addLocation', latLng);
+      Meteor.call('addLocation', latLng.lat, latLng.lng);
     } else {
       console.log('locations Not Available');
     }
