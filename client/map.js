@@ -13,8 +13,6 @@ Meteor.startup(function() {
   });
 });
 
-
-
 Template.map.helpers({
   geolocationError: function() {
     var error = Geolocation.error();
@@ -42,7 +40,8 @@ Template.map.onCreated(function() {
       size: new google.maps.Size(71, 71),
       origin: new google.maps.Point(0, 0),
       anchor: new google.maps.Point(17, 34),
-      scaledSize: new google.maps.Size(35, 35)
+      scaledSize: new google.maps.Size(35, 35),
+      setMyLocationEnabled: true
     };
     self.autorun(function() {
       var onlineStatus = false;
@@ -56,31 +55,38 @@ Template.map.onCreated(function() {
         deleted: false
       });
       if (loc && !loc.deleted) onlineStatus = true;
-
+      var infowindow;
       if (onlineStatus) {
         Locations.find({
           deleted: false
         }).forEach((p) => {
-
-          var contentString = "<div>  <b> This is my truck </b> " + Meteor.userId() + "</div>";
-          var infowindow = new google.maps.InfoWindow({
-         content: contentString
-       });
           var marker = new google.maps.Marker({
             title: "my truck",
             animation: google.maps.Animation.DROP,
-            draggable: true,
+            draggable: p.userId === Meteor.userId(),
             icon: image,
             position: new google.maps.LatLng(p.lat, p.lng),
             map: map.instance
           });
 
           marker.addListener('click', function() {
-                    infowindow.open(map, marker);
-                  });
+            var contentString = "<div>  <b> This is my truck </b> " + p.userId + "</div>";
+            if (infowindow) {
+              infowindow.close();
+            }
+            infowindow = new google.maps.InfoWindow({
+              content: contentString
+            });
+            infowindow.open(map, marker);
+          });
 
+          marker.addListener('dragend', function(event) {
+            Meteor.call('deleteLocation', Meteor.userId());
+            Meteor.call('addLocation', event.latLng.lat(), event.latLng.lng());
+          });
           markers.push(marker);
         });
+
       } else {
         Locations.find({
           userId: {
@@ -95,8 +101,7 @@ Template.map.onCreated(function() {
             animation: google.maps.Animation.DROP,
             icon: image,
             position: new google.maps.LatLng(p.lat, p.lng),
-            map: map.instance,
-            draggable: true
+            map: map.instance
           });
           markers.push(marker);
         });

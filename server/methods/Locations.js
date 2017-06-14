@@ -1,10 +1,10 @@
 Meteor.methods({
-  'addLocation': function(latLng) {
+  'addLocation': function(lat, lng) {
     //    console.log(id);
-    console.log(latLng);
+    // console.log(latLng);
     return Locations.insert({
-      lat: latLng.lat,
-      lng: latLng.lng,
+      lat: lat,
+      lng: lng,
       userId: this.userId
     }, function(error, result) {
       if (error) console.log('er :' + error); //info about what went wrong
