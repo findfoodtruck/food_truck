@@ -1,0 +1,11 @@
+<template name="ImageUpload">
+<input type="file" class="myFileInput" name="" value="">
+<h1>Uploaded IMages</h1>
+<div class="imageView">
+    {{#each images}}
+      <div>
+        <a href="{{this.url}}" target="_blank"><img src="{{this.url}}" alt="" class="thumbnail" /></a>
+      </div>
+    {{/each}}
+  </div>
+</template>

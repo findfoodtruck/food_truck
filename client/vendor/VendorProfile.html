@@ -1,5 +1,6 @@
 <template name="VendorProfile">
 <div class="container">
+  {{> ImageUpload}}
   {{#if newVendor}}
   {{#autoForm id="UserProfileEdit" collection="VendorProfile"  doc=vendorId type="update" autosave=autoSaveMode}}
   <legend>Add Profile Details</legend>
@@ -21,5 +22,6 @@
 <h1>New Profile Entry</h1>
   {{> quickForm collection="VendorProfile" id="insertVendorProfileForm" type="insert"}}
 {{/if}}
+
 </div>
 </template>
