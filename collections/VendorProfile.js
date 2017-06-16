@@ -29,6 +29,7 @@ VendorProfile.schema = new SimpleSchema({
   },
   type: {
     type: String,
+    optional: true,
     label: "Truck Type"
   },
   website: {
@@ -52,6 +53,7 @@ VendorProfile.schema = new SimpleSchema({
   lastOpen: {
     type: Date,
     label: "Last date when truck was open",
+    optional: true,
     autoform: {
       omit: true,
       label: false
@@ -60,6 +62,7 @@ VendorProfile.schema = new SimpleSchema({
   lastClose: {
     type: Date,
     label: "Last date closing time",
+    optional: true,
     autoform: {
       omit: true,
       label: false
