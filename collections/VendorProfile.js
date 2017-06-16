@@ -17,6 +17,10 @@ VendorProfile.schema = new SimpleSchema({
     type: String,
     label: "Name"
   },
+  address: {
+    type: String,
+    label: "Address"
+  },
   phone: {
     type: String,
     label: "Phone",

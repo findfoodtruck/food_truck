@@ -1,8 +1,24 @@
 <template name="VendorProfile">
-  {{> quickForm collection="VendorProfile" id="insertVendorProfileForm" type="insert"}}
 
-  <h2>All Added details</h2>
-  {{#each profileDetails}}
-  {{field}}-{{value}} <br>
-  {{/each}}
+  {{#if newVendor}}
+  {{#autoForm id="UserProfileEdit" collection="VendorProfile"  doc=vendorId type="update" autosave=autoSaveMode}}
+  <legend>Add Profile Details</legend>
+                {{> afQuickField name="name"}}
+                {{> afQuickField name="address"}}
+                {{> afQuickField name="phone"}}
+                {{> afQuickField name="type"}}
+                {{> afQuickField name="website"}}
+                {{> afQuickField name="email"}}
+                {{> afQuickField name="summary"}}
+                {{> afQuickField name="social"}}
+
+                {{#unless autoSaveMode}}
+                <div class="form-group">
+                        <button type="submit" class="btn btn-primary" disabled="{{disableButtons}}">Submit</button>
+                </div>
+                {{/unless}}
+        {{/autoForm}}
+{{else}}
+  {{> quickForm collection="VendorProfile" id="insertVendorProfileForm" type="insert"}}
+{{/if}}
 </template>

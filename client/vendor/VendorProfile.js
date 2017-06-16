@@ -9,5 +9,20 @@ Template.VendorProfile.onCreated(function() {
 Template.VendorProfile.helpers({
   profileDetails: function() {
     return VendorProfile.find();
+  },
+  vendorId: function() {
+    return VendorProfile.findOne({
+      userId: Meteor.userId()
+    });
+  },
+  newVendor: function() {
+    var exist = VendorProfile.findOne({
+      userId: Meteor.userId()
+    });
+    if (exist) return true;
+    return false;
+  },
+  autoSaveMode: function() {
+    return true;
   }
 });
