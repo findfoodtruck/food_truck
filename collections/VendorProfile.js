@@ -5,7 +5,7 @@ VendorProfile.allow({
     return true;
   },
   update: function() {
-    return false;
+    return true;
   },
   remove: function() {
     return false;
@@ -13,13 +13,59 @@ VendorProfile.allow({
 });
 
 VendorProfile.schema = new SimpleSchema({
-  field: {
+  name: {
     type: String,
-    label: "Field Name"
+    label: "Name"
   },
-  value: {
+  phone: {
     type: String,
-    label: "Field Value"
+    label: "Phone",
+    regEx: /^[0-9]{10}$/,
+    //msg: "{label} must be numeric and 10 digits"
+  },
+  type: {
+    type: String,
+    label: "Truck Type"
+  },
+  website: {
+    type: String,
+    optional: true,
+    label: "website",
+    regEx: SimpleSchema.RegEx.Domain,
+  },
+  email: {
+    type: String,
+    optional: true,
+    label: "email",
+    regEx: SimpleSchema.RegEx.Email,
+  },
+  summary: {
+    type: String,
+    label: "Brief Summary about your truck",
+    optional: true,
+    max: 1000
+  },
+  lastOpen: {
+    type: Date,
+    label: "Last date when truck was open",
+    autoform: {
+      omit: true,
+      label: false
+    }
+  },
+  lastClose: {
+    type: Date,
+    label: "Last date closing time",
+    autoform: {
+      omit: true,
+      label: false
+    }
+  },
+  social: {
+    type: [String],
+    minCount: 0,
+    optional: true,
+    regEx: SimpleSchema.RegEx.Domain,
   },
   deleted: {
     type: Boolean,
@@ -63,6 +109,7 @@ VendorProfile.schema = new SimpleSchema({
   },
   userId: {
     type: String,
+    unique: true,
     autoValue: function() {
       if (this.isInsert) {
         return this.userId;
