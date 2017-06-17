@@ -2,12 +2,17 @@ Template.ImageUpload.events({
   'change .myFileInput': function(event, template) {
     var files = event.target.files;
     for (var i = 0, ln = files.length; i < ln; i++) {
-      Images.insert(files[i], function(err, fileObj) {
-        console.log(err);
-        console.log(fileObj);
+      var fsFile = new FS.File(event.target.files[i]);
+      fsFile.owner = Meteor.userId();
+      Images.insert(fsFile, function(err, fileObj) {
+        //  console.log(err);
+        //  console.log(fileObj);
         // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
       });
     }
+  },
+  'click .deleteThis': function() {
+    return Images.remove(this._id);
   }
 });
 
@@ -21,7 +26,8 @@ Template.ImageUpload.helpers({
 
 Template.ImageUpload.onCreated(function() {
   var self = this;
+  var userId = Meteor.userId();
   self.autorun(function() {
-    self.subscribe('images');
+    self.subscribe('images', userId);
   });
 });

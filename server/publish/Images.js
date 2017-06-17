@@ -1,3 +1,9 @@
 Meteor.publish('images', function(userId) {
-  return Images.find();
+  var img = Images.find({
+    owner: userId
+  });
+  img.map(function(im) {
+    //  console.log(im);
+  });
+  return img;
 });
