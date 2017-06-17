@@ -1,9 +1,9 @@
 <template name="VendorProfile">
 <div class="container">
-  {{> ImageUpload}}
+
   {{#if newVendor}}
-  {{#autoForm id="UserProfileEdit" collection="VendorProfile"  doc=vendorId type="update" autosave=autoSaveMode}}
-  <legend>Add Profile Details</legend>
+  {{#autoForm id="UserProfileEdit" collection="VendorProfile"  doc=vendorId type=formType autosave=autoSaveMode }}
+  <legend>Update Profile Details <i class="fa fa-edit editForm"></i> Auto Save On</legend>
                 {{> afQuickField name="name"}}
                 {{> afQuickField name="address"}}
                 {{> afQuickField name="phone"}}
@@ -19,9 +19,9 @@
                 {{/unless}}
         {{/autoForm}}
 {{else}}
-<h1>New Profile Entry</h1>
+ <p class="lead">Add Profile Details</p>
   {{> quickForm collection="VendorProfile" id="insertVendorProfileForm" type="insert"}}
 {{/if}}
-
+{{> ImageUpload}}
 </div>
 </template>

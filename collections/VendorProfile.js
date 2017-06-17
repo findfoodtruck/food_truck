@@ -15,40 +15,62 @@ VendorProfile.allow({
 VendorProfile.schema = new SimpleSchema({
   name: {
     type: String,
-    label: "Name"
+    label: "Business/Shop Name"
   },
   address: {
     type: String,
-    label: "Address"
+    label: "Address, mostly where you are available",
+    max: 1000,
+    autoform: {
+      rows: 3
+    }
   },
   phone: {
     type: String,
-    label: "Phone",
+    label: "Contact Number",
     regEx: /^[0-9]{10}$/,
     //msg: "{label} must be numeric and 10 digits"
   },
   type: {
     type: String,
     optional: true,
-    label: "Truck Type"
+    label: "Truck Type",
+    autoform: {
+      type: 'select',
+      options: function() {
+        return [{
+          label: "Truck1",
+          value: "Truck1"
+        }, {
+          label: "Truck2",
+          value: "Truck2"
+        }, {
+          label: "Truck3",
+          value: "Truck3"
+        }]
+      }
+    }
   },
   website: {
     type: String,
     optional: true,
-    label: "website",
+    label: "Website",
     regEx: SimpleSchema.RegEx.Domain,
   },
   email: {
     type: String,
     optional: true,
-    label: "email",
+    label: "Email",
     regEx: SimpleSchema.RegEx.Email,
   },
   summary: {
     type: String,
     label: "Brief Summary about your truck",
     optional: true,
-    max: 1000
+    max: 1000,
+    autoform: {
+      rows: 5
+    }
   },
   lastOpen: {
     type: Date,
@@ -70,17 +92,10 @@ VendorProfile.schema = new SimpleSchema({
   },
   social: {
     type: [String],
+    label: "Social profile links Eg Facebook, twitter, zomato, pinterest, instagram etc.",
     minCount: 0,
     optional: true,
     regEx: SimpleSchema.RegEx.Domain,
-  },
-  deleted: {
-    type: Boolean,
-    defaultValue: false,
-    autoform: {
-      omit: true,
-      label: false
-    }
   },
   createdAt: {
     type: Date,

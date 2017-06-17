@@ -3,9 +3,3 @@ Meteor.publish('allLocations', function() {
     deleted: false
   });
 });
-
-Meteor.publish('vendorProfile', function(userId) {
-  return VendorProfile.find({
-    userId: userId
-  })
-});
