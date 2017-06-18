@@ -2,7 +2,7 @@ import {
   Tasks
 } from '../imports/api/tasks.js';
 
-var MAP_ZOOM = 15;
+var MAP_ZOOM = 13;
 var markers = [];
 Meteor.startup(function() {
   GoogleMaps.load({
@@ -34,6 +34,7 @@ Template.map.helpers({
 Template.map.onCreated(function() {
   var self = this;
   self.subscribe('allLocations');
+  self.subscribe('allVendorProfile');
   GoogleMaps.ready('map', function(map) {
     var image = {
       url: 'food-truck.png',
@@ -70,7 +71,11 @@ Template.map.onCreated(function() {
           });
 
           marker.addListener('click', function() {
-            var contentString = "<div>  <b> This is my truck </b> " + p.userId + "</div>";
+            var vendor = VendorProfile.findOne({
+              userId: p.userId
+            });
+            console.log('clicking icon');
+            var contentString = `<div>  <b> This is my truck </b> ${vendor.name} ${p.userId}</div>`;
             if (infowindow) {
               infowindow.close();
             }

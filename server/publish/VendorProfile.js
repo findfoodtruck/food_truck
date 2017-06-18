@@ -3,3 +3,7 @@ Meteor.publish('vendorProfile', function(userId) {
     userId: userId
   })
 });
+
+Meteor.publish('allVendorProfile', function() {
+  return VendorProfile.find({});
+});
