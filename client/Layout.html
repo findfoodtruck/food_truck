@@ -8,3 +8,11 @@
   {{/if}}
 </div>
 </template>
+
+
+<template name="MainLayout">
+  {{> nav}}
+  <div class="container-fluid">
+  {{> Template.dynamic template=main}}
+</div>
+</template>
